@@ -24,6 +24,9 @@ $color-white: #ffffff;
 $color-black: #000000;
 $color-background: #dddddd;
 $color-pink: #F08080;
+$color-dark-blue: #21498a;
+
+$border-text: 3px solid #ff0000;
 
 
 * {
@@ -34,7 +37,7 @@ $color-pink: #F08080;
 
 .banner {
   &__title {
-    border-left: 3px solid red;
+    border-left: $border-text;
     padding: 0.1rem 0.3rem;
     font-size: $font-size-large;
     font-weight: 700;
@@ -48,14 +51,17 @@ $color-pink: #F08080;
     gap: 0;
   }
 
-  &--second {
-    .banner__subtitle {
+  &__subtitle {
+    color: $color-black;
+    font-size: $font-size-large;
+    &--pink {
       color: $color-pink;
     }
   }
 
   &__info {
-    padding: 10rem 8rem 10rem 10rem;
+    padding: 10rem;
+    padding-right: 8rem;
   }
 
   &__text {
@@ -78,16 +84,17 @@ $color-pink: #F08080;
     }
   }
 
+  &--secondaryConversion {
 
-  &--third {
     .banner {
       &__body {
         display: grid;
         grid-template-columns: 1fr 2fr;
       }
 
-      &__image{
+      &__image {
         padding: 2rem 0.1rem 2rem 10rem;
+        order: -1;
         img {
           width: 100%;
           height: auto;
@@ -109,3 +116,30 @@ $color-pink: #F08080;
   }
 }
 
+.contacts {
+  display: none;
+  background-color: $color-dark-blue;
+  color: $color-white;
+  font-family: 'poppins',sans-serif;
+  padding: 2rem;
+  padding-left: 10rem;
+  height: 15rem;
+  margin-top: 1rem;
+  position: relative;
+
+  &__title {
+    font-size: $font-size-large;
+    
+  }
+
+  &::before {
+    content: '';
+    height: 0;
+    width: 0;
+    border: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid $color-dark-blue;
+    position: absolute;
+    top: -1rem;
+    left: 10rem;
+  }
+}
