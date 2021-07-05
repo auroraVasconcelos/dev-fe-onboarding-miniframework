@@ -1,8 +1,10 @@
 const gulp = require('gulp');
-const sass = require('gulp-sass');
-sass.compiler = require('node-sass');
+//const sass = require('gulp-sass');
+
 const connect = require('gulp-connect');
 var rename = require('gulp-rename');
+var sass = require('gulp-sass')(require('sass'));
+sass.compiler = require('node-sass');
 
 function styles(done) {
   gulp
