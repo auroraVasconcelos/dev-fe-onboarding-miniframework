@@ -1,29 +1,38 @@
 import {animatedScrollTo} from './es6-scroll-to.js';
 
+// Default settings
 // document.querySelector('.title').innerHTML = 'Great success!'
 // document.querySelector('.text').innerHTML = 'Javascript is working!'
 
-let once = false;
-const contacts = Array.from(document.querySelectorAll('.banner__btn'));
+//get all buttons named button__btn from the page
+const counter = Array.from(document.querySelectorAll('.banner__btn'));
 
-const test = () => {
-    console.log('click');
+const toggleContacts = (e) => {
+    //define clicked button
+    const buttonClicked = e.target;
+
+    const contacts = buttonClicked.closest('.container').querySelector('.contacts');
+
+    //check if contacts div is already visible
+    if(!contacts.classList.contains('visible')) {
+
+        //disable all contacts div visibility
+        const allContacts = Array.from(buttonClicked.closest('main').querySelectorAll('.contacts'));
+        allContacts.forEach(contact => contact.classList.remove('visible'));
+
+        //enable visibility at contacts div from clicked button
+        contacts.classList.add('visible');
+    }
+    else {
+        //remove visibility
+        contacts.classList.remove('visible');
+    }
+
 }
 
-contacts.forEach((button) => {
-    button.addEventListener('click', test());
-});
-
-const show = () => {
-
-    if(once) {
-        once = false;
-        contacts.style.display = 'none';
-    }
-    else if(!once) {
-        once = true;
-        contacts.style.display = 'block';
-    }
-}
+//add event listener too all buttons
+counter.forEach( (button) => 
+    button.addEventListener('click',toggleContacts)
+)
 
 animatedScrollTo(500);

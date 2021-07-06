@@ -127,6 +127,10 @@ $border-text: 3px solid #ff0000;
   margin-top: 1rem;
   position: relative;
 
+  &.visible {
+    display: block;
+  }
+
   &__title {
     font-size: $font-size-large;
     
