@@ -1,38 +1,51 @@
-import {animatedScrollTo} from './es6-scroll-to.js';
+// //get all buttons named button__btn from the page
+// const counter = Array.from(document.querySelectorAll('.banner__btn'));
+// const toggleContacts = (event) => {
+//     //define clicked button
+//     const buttonClicked = event.target;
+//     const contactsVisibleClass = 'contacts--visible';
+//     const contacts = buttonClicked.closest('.container').querySelector('.contacts');
 
-// Default settings
-// document.querySelector('.title').innerHTML = 'Great success!'
-// document.querySelector('.text').innerHTML = 'Javascript is working!'
+//     if(contacts.classList.contains(contactsVisibleClass)) {
+//         //remove visibility
+//         return contacts.classList.remove(contactsVisibleClass);
+//     }
 
-//get all buttons named button__btn from the page
-const counter = Array.from(document.querySelectorAll('.banner__btn'));
+//     //disable all contacts div visibility
+//     const allContacts = Array.from(buttonClicked.closest('main').querySelectorAll('.contacts'));
+//     allContacts.forEach(contact => contact.classList.remove(contactsVisibleClass));
 
-const toggleContacts = (e) => {
-    //define clicked button
-    const buttonClicked = e.target;
+//     //enable visibility at contacts div from clicked button
+//     contacts.classList.add(contactsVisibleClass);
+// }
 
-    const contacts = buttonClicked.closest('.container').querySelector('.contacts');
+// //add event listener too all buttons
+// counter.forEach(button => button.addEventListener('click', toggleContacts));
 
-    //check if contacts div is already visible
-    if(!contacts.classList.contains('visible')) {
+// CUSTOM EVENT
+//variaveis necessarias
+const buttons = Array.from(document.querySelectorAll('.banner__btn'));
+const allContacts = Array.from(document.querySelectorAll('.contacts'));
+const contactsVisibleClass = 'contacts--visible';
 
-        //disable all contacts div visibility
-        const allContacts = Array.from(buttonClicked.closest('main').querySelectorAll('.contacts'));
-        allContacts.forEach(contact => contact.classList.remove('visible'));
+allContacts.forEach(contact => { contact.addEventListener('toggleContactsEvent', function(toggleEvent) {
 
-        //enable visibility at contacts div from clicked button
-        contacts.classList.add('visible');
+    const activeContact = toggleEvent.detail.buttonClicked;
+    if(activeContact.classList.contains(contactsVisibleClass)) {
+        return activeContact.classList.remove(contactsVisibleClass);
     }
-    else {
-        //remove visibility
-        contacts.classList.remove('visible');
-    }
+    allContacts.forEach(contact => {contact.classList.remove(contactsVisibleClass)});
+    activeContact.classList.add(contactsVisibleClass);
+    
+    })
+});
 
-}
-
-//add event listener too all buttons
-counter.forEach( (button) => 
-    button.addEventListener('click',toggleContacts)
-)
-
-animatedScrollTo(500);
+buttons.forEach(button => button.addEventListener('click', function(clickEvent){
+    const contactToShow = clickEvent.target.closest('.container').querySelector('.contacts');
+    const toggleContacts = new CustomEvent('toggleContactsEvent', {
+        detail: {
+            buttonClicked: contactToShow
+        }
+    });
+    allContacts.forEach(contact => contact.dispatchEvent(toggleContacts));
+}));
